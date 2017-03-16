@@ -1,0 +1,22 @@
+apply plugin: 'war'
+apply plugin: 'java'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+	compile 'redis.clients:jedis:2.6.2'
+    compile 'org.apache.geronimo.specs:geronimo-servlet_3.0_spec:1.0'
+    compile 'javax.servlet:jstl:1.2'
+}
+
+// check.dependsOn.remove(test) // Skip Testing
+
+task deployToJetty(type: Copy) {
+	from 'build/libs'
+	into 'C:/jetty/webapps/'
+	include '*.war'
+}
+
+assemble.finalizedBy(deployToJetty)
